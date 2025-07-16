@@ -1,0 +1,19 @@
+Kursunterlagen/AufgabenJMI/Datenanalye.ipynb
+Kursunterlagen/data-prozess-20250714/Daten und Prozessanalyse/csv/testKunden.csv
+
+#Einlesen und Anzeigen mit Relativem Pfad
+
+import pandas as pd
+
+df = pd.read_csv("../data-prozess-20250714/Daten und Prozessanalyse/csv/testKunden.csv")
+
+print(df_testKunden)
+
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+Cell In[5], line 7
+      3 import pandas as pd
+      5 df = pd.read_csv("../data-prozess-20250714/Daten und Prozessanalyse/csv/testKunden.csv")
+----> 7 print(df_testKunden)
+
+NameError: name 'df_testKunden' is not defined
