@@ -1,0 +1,57 @@
+Gerne! Schauen wir uns deinen Code Schritt für Schritt an:
+
+```python
+report = df.groupby("bundesland").agg(
+    anzahl_kunden=("Vorname", "count"),
+    anzahl_orte=("Ort_x", "nunique"),
+    haeufigste_plz=("PLZ", lambda x: x.mode().iloc[0] if not x.mode().empty else None)
+)
+```
+
+### Was passiert hier?
+
+1. **Gruppierung nach Bundesland:**  
+   Mit `df.groupby("bundesland")` wird dein DataFrame nach der Spalte "bundesland" gruppiert. Das heißt, alle Zeilen mit demselben Bundesland werden zusammen betrachtet.
+
+2. **.agg(...)**  
+   Die `.agg()`-Funktion ermöglicht es dir, für jede Gruppe verschiedene Berechnungen (Aggregationen) durchzuführen. Du bestimmst dabei selbst, welche Spalten wie ausgewertet werden.
+
+---
+
+#### Die einzelnen Aggregationen:
+
+- **anzahl_kunden=("Vorname", "count"):**  
+  Für jede Gruppe (jedes Bundesland) wird gezählt, wie viele Einträge es in der Spalte "Vorname" gibt. Das ist häufig gleichbedeutend mit der Anzahl der Kunden im jeweiligen Bundesland.
+
+- **anzahl_orte=("Ort_x", "nunique"):**  
+  Für jedes Bundesland wird gezählt, wie viele verschiedene Orte (`nunique` = "number of unique") in der Spalte "Ort_x" vorkommen.
+
+- **haeufigste_plz=("PLZ", lambda x: x.mode().iloc[0] if not x.mode().empty else None):**  
+  Für jedes Bundesland wird die am häufigsten vorkommende Postleitzahl ("PLZ") bestimmt.  
+  - `x.mode()` gibt die häufigste(n) PLZ zurück (als Series).
+  - `.iloc[0]` nimmt den ersten Wert, falls es mehrere gibt.
+  - Falls `mode()` leer ist (also keine PLZ vorhanden), wird `None` zurückgegeben, damit kein Fehler entsteht.
+
+---
+
+### Ergebnis
+
+Das Ergebnis ist ein DataFrame (`report`) mit einem Index je Bundesland. Die Spalten sind:
+- **anzahl_kunden:** Gesamtzahl der Kunden im Bundesland
+- **anzahl_orte:** Anzahl unterschiedlicher Orte im Bundesland
+- **haeufigste_plz:** Die häufigste Postleitzahl im Bundesland
+
+**Beispielausgabe:**
+
+| bundesland | anzahl_kunden | anzahl_orte | haeufigste_plz |
+|------------|---------------|-------------|----------------|
+| Bayern     | 123           | 45          | 80331          |
+| Hessen     | 98            | 30          | 60311          |
+| ...        | ...           | ...         | ...            |
+
+---
+
+**Zusammengefasst:**  
+Du erzeugst eine übersichtliche Zusammenfassung je Bundesland mit der Anzahl der Kunden, wie viele verschiedene Orte es gibt, und welche PLZ am häufigsten ist.
+
+Sag Bescheid, wenn du noch eine Beispielausgabe wünschst oder eine der Aggregationen genauer erklärt haben möchtest!

@@ -1,0 +1,37 @@
+Um die Kunden nach Bundesland gruppiert als JSON-Datei zu exportieren, kannst du folgendermaßen vorgehen:
+
+```python
+import json
+
+# Gruppieren nach Bundesland und als Dictionary aufbauen
+kunden_dict = (
+    df.groupby("bundesland")
+      .apply(lambda x: x.drop(columns=["bundesland"]).to_dict(orient="records"))
+      .to_dict()
+)
+
+# Als JSON-Datei speichern
+with open("kunden_nach_bundesland.json", "w", encoding="utf-8") as f:
+    json.dump(kunden_dict, f, ensure_ascii=False, indent=2)
+```
+
+**Erklärung:**
+- `groupby("bundesland")`: Gruppiert den DataFrame nach Bundesland.
+- `.apply(lambda x: ...)`: Für jede Gruppe wird die Spalte "bundesland" entfernt und die Gruppe in eine Liste von Dictionaries (je Kunde ein Dictionary) umgewandelt.
+- `.to_dict()`: Das Gesamtergebnis wird ein Dictionary mit Bundesland als Schlüssel und einer Liste von Kundendicts als Wert.
+- `json.dump(..., ensure_ascii=False, indent=2)`: Speichert die Daten schön formatiert und mit Umlauten als JSON.
+
+**Beispiel für die resultierende JSON-Datei:**
+```json
+{
+  "Berlin": [
+    {"Vorname": "Max", "Nachname": "Mustermann", ...},
+    {"Vorname": "Erika", "Nachname": "Musterfrau", ...}
+  ],
+  "NRW": [
+    {"Vorname": "Hans", "Nachname": "Meier", ...}
+  ]
+}
+```
+
+Sag Bescheid, wenn du eine Variante ohne das Entfernen der "bundesland"-Spalte möchtest oder noch weitere Anpassungen brauchst!
