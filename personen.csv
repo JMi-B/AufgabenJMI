@@ -1,0 +1,5 @@
+id,name,email,aktiv
+1,Max Mustermann,max@example.com,true
+2,Erika Musterfrau,,false
+3,,hans@example.com,true
+4,Julia,invalid-mail,true
