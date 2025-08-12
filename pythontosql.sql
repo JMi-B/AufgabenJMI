@@ -1,3 +1,7 @@
+/*
+Tabele erstellen für immport
+*/
+
 create database pythontosql;
 use pythontosql;
 
