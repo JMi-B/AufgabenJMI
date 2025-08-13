@@ -2,16 +2,22 @@
 Tabele erstellen für immport
 */
 
+/*
 create database pythontosql;
+*/
+
 use pythontosql;
 
-CREATE TABLE kunden (
+drop table if exists kunden;
+
+CREATE TABLE KundenJMI (
     Kundennr INT PRIMARY KEY,
     Name VARCHAR(100),
-    age INT,
+    Kundenalter INT,
     PLZ VARCHAR(10),
     Stadt VARCHAR(100)
 );
 
 create index inx_PLZ
-on Kunden (PLZ);
+on KundenJMI (PLZ);
+
